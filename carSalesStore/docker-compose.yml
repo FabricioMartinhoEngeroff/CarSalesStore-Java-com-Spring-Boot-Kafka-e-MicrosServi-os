@@ -1,0 +1,17 @@
+version: '4'
+
+services:
+  zookeeper2:
+    image: 'confluentinc/cp-zookeeper:latest'
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2183
+
+  kafka2:
+    image: 'confluentinc/cp-kafka:latest'
+    depends_on:
+      - zookeeper2
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper2:2183
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9098
+    ports:
+      - "9098:9098"
